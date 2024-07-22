@@ -55,7 +55,7 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_adouPath"></a> [adouPath](#input\_adouPath)
+### <a name="input_adouPath"></a> [adou_path](#input\_adouPath)
 
 Description: The Active Directory OU path.
 
@@ -67,7 +67,7 @@ Description: The suffix of Active Directory OU path.
 
 Type: `string`
 
-### <a name="input_clusterName"></a> [clusterName](#input\_clusterName)
+### <a name="input_clusterName"></a> [cluster_name](#input\_clusterName)
 
 Description: The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure.
 

@@ -1,9 +1,9 @@
-variable "adouPath" {
+variable "adou_path" {
   type        = string
   description = "The Active Directory OU path."
 }
 
-variable "clusterName" {
+variable "cluster_name" {
   type        = string
   description = "The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure."
 }

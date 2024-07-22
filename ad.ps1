@@ -2,7 +2,7 @@ param(
     $userName,
     $password,
     $authType,
-    $adouPath,
+    $adou_path,
     $ip, $port,
     $domainFqdn,
     $ifdeleteadou,
@@ -33,7 +33,7 @@ for ($count = 0; $count -lt 3; $count++) {
             Invoke-Command -Session $session -ScriptBlock {
                 $OUPrefixList = @("OU=Computers,", "OU=Users,", "")
                 foreach ($prefix in $OUPrefixList) {
-                    $ouname = "$prefix$Using:adouPath"
+                    $ouname = "$prefix$Using:adou_path"
                     echo "try to get OU: $ouname"
                     Try {
                         $ou = Get-ADOrganizationalUnit -Identity $ouname
@@ -60,7 +60,7 @@ for ($count = 0; $count -lt 3; $count++) {
             echo "Add KdsRootKey"
             Add-KdsRootKey -EffectiveTime ((Get-Date).addhours(-10))
             echo "New HciAdObjectsPreCreation"
-            New-HciAdObjectsPreCreation -AzureStackLCMUserCredential $Using:lcmCred -AsHciOUName $Using:adouPath
+            New-HciAdObjectsPreCreation -AzureStackLCMUserCredential $Using:lcmCred -AsHciOUName $Using:adou_path
         }
         break
     }
