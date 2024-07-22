@@ -24,32 +24,32 @@ variable "deployment_user_password" {
   description = "The password for deployment user."
 }
 
-variable "domainAdminPassword" {
+variable "domain_admin_password" {
   type        = string
   description = "The password for the domain administrator account."
 }
 
-variable "domainAdminUser" {
+variable "domain_admin_user" {
   type        = string
   description = "The username for the domain administrator account."
 }
 
-variable "domainFqdn" {
+variable "domain_fqdn" {
   type        = string
   description = "The domain FQDN."
 }
 
-variable "domainServerIP" {
+variable "domain_server_ip" {
   type        = string
   description = "The ip of the domain server."
 }
 
-variable "localAdminPassword" {
+variable "local_admin_password" {
   type        = string
   description = "The password for the local administrator account."
 }
 
-variable "localAdminUser" {
+variable "local_admin_user" {
   type        = string
   description = "The username for the local administrator account."
 }
@@ -72,7 +72,7 @@ variable "name" {
   }
 }
 
-variable "resourceGroup" {
+variable "resource_group" {
   description = "The resource group where the resources will be deployed."
 }
 
@@ -90,12 +90,12 @@ variable "servers" {
   description = "A list of servers with their names and IPv4 addresses."
 }
 
-variable "servicePrincipalId" {
+variable "service_principal_id" {
   type        = string
   description = "The service principal ID for the Azure account."
 }
 
-variable "servicePrincipalSecret" {
+variable "service_principal_secret" {
   type        = string
   description = "The service principal secret for the Azure account."
 }
@@ -110,19 +110,19 @@ variable "site_id" {
   }
 }
 
-variable "subscriptionId" {
+variable "subscription_id" {
   type        = string
   description = "The subscription ID for the Azure account."
 }
 
-variable "authenticationMethod" {
+variable "authentication_method" {
   type        = string
   default     = "Default"
   description = "The authentication method for Enter-PSSession."
 
   validation {
-    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authenticationMethod))
-    error_message = "Value of authenticationMethod should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
+    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authentication_method))
+    error_message = "Value of authentication_method should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
   }
 }
 
@@ -149,7 +149,7 @@ A map describing customer-managed keys to associate with the resource. This incl
 DESCRIPTION  
 }
 
-variable "dcPort" {
+variable "dc_port" {
   type        = number
   default     = 5985
   description = "Domain controller winrm port in virtual host"
@@ -236,70 +236,6 @@ DESCRIPTION
   }
 }
 
-variable "private_endpoints" {
-  type = map(object({
-    name = optional(string, null)
-    role_assignments = optional(map(object({
-      role_definition_id_or_name             = string
-      principal_id                           = string
-      description                            = optional(string, null)
-      skip_service_principal_aad_check       = optional(bool, false)
-      condition                              = optional(string, null)
-      condition_version                      = optional(string, null)
-      delegated_managed_identity_resource_id = optional(string, null)
-    })), {})
-    lock = optional(object({
-      kind = string
-      name = optional(string, null)
-    }), null)
-    tags                                    = optional(map(string), null)
-    subnet_resource_id                      = string
-    private_dns_zone_group_name             = optional(string, "default")
-    private_dns_zone_resource_ids           = optional(set(string), [])
-    application_security_group_associations = optional(map(string), {})
-    private_service_connection_name         = optional(string, null)
-    network_interface_name                  = optional(string, null)
-    location                                = optional(string, null)
-    resource_group_name                     = optional(string, null)
-    ip_configurations = optional(map(object({
-      name               = string
-      private_ip_address = string
-    })), {})
-  }))
-  default     = {}
-  description = <<DESCRIPTION
-A map of private endpoints to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-
-- `name` - (Optional) The name of the private endpoint. One will be generated if not set.
-- `role_assignments` - (Optional) A map of role assignments to create on the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time. See `var.role_assignments` for more information.
-- `lock` - (Optional) The lock level to apply to the private endpoint. Default is `None`. Possible values are `None`, `CanNotDelete`, and `ReadOnly`.
-- `tags` - (Optional) A mapping of tags to assign to the private endpoint.
-- `subnet_resource_id` - The resource ID of the subnet to deploy the private endpoint in.
-- `private_dns_zone_group_name` - (Optional) The name of the private DNS zone group. One will be generated if not set.
-- `private_dns_zone_resource_ids` - (Optional) A set of resource IDs of private DNS zones to associate with the private endpoint. If not set, no zone groups will be created and the private endpoint will not be associated with any private DNS zones. DNS records must be managed external to this module.
-- `application_security_group_resource_ids` - (Optional) A map of resource IDs of application security groups to associate with the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-- `private_service_connection_name` - (Optional) The name of the private service connection. One will be generated if not set.
-- `network_interface_name` - (Optional) The name of the network interface. One will be generated if not set.
-- `location` - (Optional) The Azure location where the resources will be deployed. Defaults to the location of the resource group.
-- `resource_group_name` - (Optional) The resource group where the resources will be deployed. Defaults to the resource group of this resource.
-- `ip_configurations` - (Optional) A map of IP configurations to create on the private endpoint. If not specified the platform will create one. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-  - `name` - The name of the IP configuration.
-  - `private_ip_address` - The private IP address of the IP configuration.
-DESCRIPTION
-  nullable    = false
-}
-
-# This variable is used to determine if the private_dns_zone_group block should be included,
-# or if it is to be managed externally, e.g. using Azure Policy.
-# https://github.com/Azure/terraform-azurerm-avm-res-keyvault-vault/issues/32
-# Alternatively you can use AzAPI, which does not have this issue.
-variable "private_endpoints_manage_dns_zone_group" {
-  type        = bool
-  default     = true
-  description = "Whether to manage private DNS zone groups with this module. If set to false, you must manage private DNS zone groups externally, e.g. using Azure Policy."
-  nullable    = false
-}
-
 variable "role_assignments" {
   type = map(object({
     role_definition_id_or_name             = string
@@ -340,7 +276,7 @@ variable "tags" {
 }
 
 # Virtual host related variables
-variable "virtualHostIp" {
+variable "virtual_host_ip" {
   type        = string
   default     = ""
   description = "The virtual host IP address."

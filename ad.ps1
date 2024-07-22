@@ -4,7 +4,7 @@ param(
     $authType,
     $adou_path,
     $ip, $port,
-    $domainFqdn,
+    $domain_fqdn,
     $ifdeleteadou,
     $deployment_user,
     $deployment_user_password
@@ -16,7 +16,7 @@ $count = 0
 for ($count = 0; $count -lt 3; $count++) {
     try {
         $secpasswd = ConvertTo-SecureString $password -AsPlainText -Force
-        $domainShort = $domainFqdn.Split(".")[0]
+        $domainShort = $domain_fqdn.Split(".")[0]
         $cred = New-Object System.Management.Automation.PSCredential -ArgumentList "$domainShort\$username", $secpasswd
         
         if ($authType -eq "CredSSP") {

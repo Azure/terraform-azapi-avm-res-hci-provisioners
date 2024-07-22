@@ -26,13 +26,13 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_localAdminPassword"></a> [localAdminPassword](#input\_localAdminPassword)
+### <a name="input_local_admin_password"></a> [local\_admin\_password](#input\_local\_admin\_password)
 
 Description: The password for the local administrator account.
 
 Type: `string`
 
-### <a name="input_localAdminUser"></a> [localAdminUser](#input\_localAdminUser)
+### <a name="input_local_admin_user"></a> [local\_admin\_user](#input\_local\_admin\_user)
 
 Description: The username for the local administrator account.
 
@@ -50,31 +50,31 @@ Description: The name of the resource group.
 
 Type: `string`
 
-### <a name="input_serverIP"></a> [serverIP](#input\_serverIP)
+### <a name="input_server_ip"></a> [server\_ip](#input\_server\_ip)
 
 Description: The IP address of the server.
 
 Type: `string`
 
-### <a name="input_serverName"></a> [serverName](#input\_serverName)
+### <a name="input_server_name"></a> [server\_name](#input\_server\_name)
 
 Description: The name of the server.
 
 Type: `string`
 
-### <a name="input_servicePrincipalId"></a> [servicePrincipalId](#input\_servicePrincipalId)
+### <a name="input_service_principal_id"></a> [service\_principal\_id](#input\_service\_principal\_id)
 
 Description: The service principal ID for the Azure account.
 
 Type: `string`
 
-### <a name="input_servicePrincipalSecret"></a> [servicePrincipalSecret](#input\_servicePrincipalSecret)
+### <a name="input_service_principal_secret"></a> [service\_principal\_secret](#input\_service\_principal\_secret)
 
 Description: The service principal secret for the Azure account.
 
 Type: `string`
 
-### <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId)
+### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
 
 Description: The subscription ID for the Azure account.
 
@@ -90,7 +90,7 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_authenticationMethod"></a> [authenticationMethod](#input\_authenticationMethod)
+### <a name="input_authentication_method"></a> [authentication\_method](#input\_authentication\_method)
 
 Description: The authentication method for Enter-PSSession.
 
@@ -106,7 +106,7 @@ Type: `bool`
 
 Default: `false`
 
-### <a name="input_winrmPort"></a> [winrmPort](#input\_winrmPort)
+### <a name="input_winrm_port"></a> [winrm\_port](#input\_winrm\_port)
 
 Description: WinRM port
 

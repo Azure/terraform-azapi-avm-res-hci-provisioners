@@ -45,24 +45,24 @@ module "servers" {
     for index, server in var.servers :
     server.name => server.ipv4Address
   }
-  depends_on             = [terraform_data.ad_creation_provisioner, azurerm_resource_group.rg]
-  source                 = "./modules/hci-server"
-  resource_group_name    = azurerm_resource_group.rg.name
-  serverName             = each.key
-  localAdminUser         = var.localAdminUser
-  localAdminPassword     = var.localAdminPassword
-  authenticationMethod   = var.authenticationMethod
-  serverIP               = var.virtualHostIp == "" ? each.value : var.virtualHostIp
-  winrmPort              = var.virtualHostIp == "" ? 5985 : var.serverPorts[each.key]
-  subscriptionId         = var.subscriptionId
-  location               = azurerm_resource_group.rg.location
-  tenant                 = data.azurerm_client_config.current.tenant_id
-  servicePrincipalId     = var.servicePrincipalId
-  servicePrincipalSecret = var.servicePrincipalSecret
-  expandC                = var.virtualHostIp == "" ? false : true
+  depends_on               = [terraform_data.ad_creation_provisioner, azurerm_resource_group.rg]
+  source                   = "./modules/hci-server"
+  resource_group_name      = azurerm_resource_group.rg.name
+  server_name              = each.key
+  local_admin_user         = var.local_admin_user
+  local_admin_password     = var.local_admin_password
+  authentication_method    = var.authentication_method
+  server_ip                = var.virtual_host_ip == "" ? each.value : var.virtual_host_ip
+  winrm_port               = var.virtual_host_ip == "" ? 5985 : var.serverPorts[each.key]
+  subscription_id          = var.subscription_id
+  location                 = azurerm_resource_group.rg.location
+  tenant                   = data.azurerm_client_config.current.tenant_id
+  service_principal_id     = var.service_principal_id
+  service_principal_secret = var.service_principal_secret
+  expandC                  = var.virtual_host_ip == "" ? false : true
 }
 
 resource "terraform_data" "replacement" {
-  input = var.resourceGroup.name
+  input = var.resource_group.name
 }
 

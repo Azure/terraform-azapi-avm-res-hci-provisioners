@@ -1,9 +1,9 @@
-variable "localAdminPassword" {
+variable "local_admin_password" {
   type        = string
   description = "The password for the local administrator account."
 }
 
-variable "localAdminUser" {
+variable "local_admin_user" {
   type        = string
   description = "The username for the local administrator account."
 }
@@ -18,27 +18,27 @@ variable "resource_group_name" {
   description = "The name of the resource group."
 }
 
-variable "serverIP" {
+variable "server_ip" {
   type        = string
   description = "The IP address of the server."
 }
 
-variable "serverName" {
+variable "server_name" {
   type        = string
   description = "The name of the server."
 }
 
-variable "servicePrincipalId" {
+variable "service_principal_id" {
   type        = string
   description = "The service principal ID for the Azure account."
 }
 
-variable "servicePrincipalSecret" {
+variable "service_principal_secret" {
   type        = string
   description = "The service principal secret for the Azure account."
 }
 
-variable "subscriptionId" {
+variable "subscription_id" {
   type        = string
   description = "The subscription ID for the Azure account."
 }
@@ -48,14 +48,14 @@ variable "tenant" {
   description = "The tenant ID for the Azure account."
 }
 
-variable "authenticationMethod" {
+variable "authentication_method" {
   type        = string
   default     = "Default"
   description = "The authentication method for Enter-PSSession."
 
   validation {
-    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authenticationMethod))
-    error_message = "Value of authenticationMethod should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
+    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authentication_method))
+    error_message = "Value of authentication_method should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
   }
 }
 
@@ -64,7 +64,7 @@ variable "expandC" {
   default = false
 }
 
-variable "winrmPort" {
+variable "winrm_port" {
   type        = number
   default     = 5985
   description = "WinRM port"

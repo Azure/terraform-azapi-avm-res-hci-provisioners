@@ -48,25 +48,25 @@ module "test" {
 
   enable_telemetry = var.enable_telemetry # see variables.tf
   // Beginning of specific varible for virtual environment
-  dcPort = 6985
+  dc_port = 6985
   serverPorts = {
     "AzSHOST1" = 15985,
     "AzSHOST2" = 25985
   }
-  virtualHostIp = var.private_ip
+  virtual_host_ip = var.private_ip
 
 
   adou_suffix              = "DC=jumpstart,DC=local"
-  subscriptionId           = var.subscriptionId
-  authenticationMethod     = "Credssp"
-  domainFqdn               = "jumpstart.local"
+  subscription_id          = var.subscription_id
+  authentication_method    = "Credssp"
+  domain_fqdn              = "jumpstart.local"
   deployment_user_password = var.deployment_user_password
-  domainAdminUser          = var.domainAdminUser
-  domainAdminPassword      = var.domainAdminPassword
-  localAdminUser           = var.localAdminUser
-  localAdminPassword       = var.localAdminPassword
-  servicePrincipalId       = var.servicePrincipalId
-  servicePrincipalSecret   = var.servicePrincipalSecret
+  domain_admin_user        = var.domain_admin_user
+  domain_admin_password    = var.domain_admin_password
+  local_admin_user         = var.local_admin_user
+  local_admin_password     = var.local_admin_password
+  service_principal_id     = var.service_principal_id
+  service_principal_secret = var.service_principal_secret
   cluster_name             = local.cluster_name
   starting_address         = "192.168.1.55"
   ending_address           = "192.168.1.65"
@@ -80,9 +80,9 @@ module "test" {
       ipv4Address = "192.168.1.13"
     }
   ]
-  resourceGroup         = azurerm_resource_group.rg
+  resource_group        = azurerm_resource_group.rg
   deployment_user       = local.deployment_user_name
-  domainServerIP        = "192.168.1.254"
+  domain_server_ip      = "192.168.1.254"
   adou_path             = local.adou_path
   lnet_starting_address = "192.168.1.171"
   lnet_ending_address   = "192.168.1.190"

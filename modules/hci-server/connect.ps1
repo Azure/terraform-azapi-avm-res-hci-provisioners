@@ -3,7 +3,7 @@ param(
     $password,
     $authType,
     $ip, $port,
-    $subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret, $expandC
+    $subscription_id, $resource_group_name, $region, $tenant, $service_principal_id, $service_principal_secret, $expandC
 )
 
 $script:ErrorActionPreference = 'Stop'
@@ -25,7 +25,7 @@ for ($count = 0; $count -lt 3; $count++) {
         $session = New-PSSession -ComputerName $ip -Port $port -Authentication $authType -Credential $cred
 
         Invoke-Command -Session $session -ScriptBlock {
-            Param ($subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret)
+            Param ($subscription_id, $resource_group_name, $region, $tenant, $service_principal_id, $service_principal_secret)
             $script:ErrorActionPreference = 'Stop'
 
             function Install-ModuleIfMissing {
@@ -68,13 +68,13 @@ for ($count = 0; $count -lt 3; $count++) {
                 throw "BITS transfer failed after 3 minutes. Job state: $job.JobState"
             }
 
-            $creds = [System.Management.Automation.PSCredential]::new($servicePrincipalId, (ConvertTo-SecureString $servicePrincipalSecret -AsPlainText -Force))
+            $creds = [System.Management.Automation.PSCredential]::new($service_principal_id, (ConvertTo-SecureString $service_principal_secret -AsPlainText -Force))
 
             Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false
 
             Install-ModuleIfMissing -Name Az -Repository PSGallery -Force
 
-            Connect-AzAccount -Subscription $subscriptionId -Tenant $tenant -Credential $creds -ServicePrincipal
+            Connect-AzAccount -Subscription $subscription_id -Tenant $tenant -Credential $creds -ServicePrincipal
             echo "login to Azure"
 
             Install-Module AzSHCI.ARCInstaller -Force -AllowClobber
@@ -87,7 +87,7 @@ for ($count = 0; $count -lt 3; $count++) {
             $id = (Get-AzContext).Tenant.Id
             $token = (Get-AzAccessToken).Token
             $accountid = (Get-AzContext).Account.Id
-            Invoke-AzStackHciArcInitialization -SubscriptionID $subscriptionId -ResourceGroup $resource_group_name -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
+            Invoke-AzStackHciArcInitialization -subscription_id $subscription_id -resource_group $resource_group_name -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
             $exitCode = $LASTEXITCODE
             $script:ErrorActionPreference = 'Stop'
             if ($exitCode -eq 0) {
@@ -100,8 +100,8 @@ for ($count = 0; $count -lt 3; $count++) {
             sleep 600
             $ready = $false
             while (!$ready) {
-                Connect-AzAccount -Subscription $subscriptionId -Tenant $tenant -Credential $creds -ServicePrincipal
-                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -ResourceGroup $resource_group_name -MachineName $env:COMPUTERNAME -SubscriptionId $subscriptionId
+                Connect-AzAccount -Subscription $subscription_id -Tenant $tenant -Credential $creds -ServicePrincipal
+                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -resource_group $resource_group_name -MachineName $env:COMPUTERNAME -subscription_id $subscription_id
                 if ($extension.ProvisioningState -eq "Succeeded") {
                     $ready = $true
                 }
@@ -111,7 +111,7 @@ for ($count = 0; $count -lt 3; $count++) {
                 }
             }
 
-        } -ArgumentList $subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret
+        } -ArgumentList $subscription_id, $resource_group_name, $region, $tenant, $service_principal_id, $service_principal_secret
         break
     }
     catch {

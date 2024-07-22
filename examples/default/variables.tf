@@ -3,37 +3,37 @@ variable "deployment_user_password" {
   description = "The password for deployment user."
 }
 
-variable "domainAdminPassword" {
+variable "domain_admin_password" {
   type        = string
   description = "The password of the domain account."
 }
 
-variable "domainAdminUser" {
+variable "domain_admin_user" {
   type        = string
   description = "The username of the domain account."
 }
 
-variable "localAdminPassword" {
+variable "local_admin_password" {
   type        = string
   description = "The password of the local administrator account."
 }
 
-variable "localAdminUser" {
+variable "local_admin_user" {
   type        = string
   description = "The username of the local administrator account."
 }
 
-variable "servicePrincipalId" {
+variable "service_principal_id" {
   type        = string
   description = "The id of service principal to create hci cluster."
 }
 
-variable "servicePrincipalSecret" {
+variable "service_principal_secret" {
   type        = string
   description = "The secret of service principal to create hci cluster."
 }
 
-variable "subscriptionId" {
+variable "subscription_id" {
   type        = string
   description = "The subscription id to register this environment."
 }
@@ -54,13 +54,13 @@ If it is set to false, then no telemetry will be collected.
 DESCRIPTION
 }
 
-variable "rpServicePrincipalObjectId" {
+variable "rp_service_principal_object_id" {
   type        = string
   default     = ""
   description = "The object ID of the HCI resource provider service principal."
 }
 
-variable "vmAdminPassword" {
+variable "vm_admin_password" {
   type        = string
   default     = "!!123abc!!123abc"
   description = "Admin password for the VM"

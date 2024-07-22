@@ -85,25 +85,25 @@ Description: The password for deployment user.
 
 Type: `string`
 
-### <a name="input_domainAdminPassword"></a> [domainAdminPassword](#input\_domainAdminPassword)
+### <a name="input_domain_admin_password"></a> [domain\_admin\_password](#input\_domain\_admin\_password)
 
 Description: The password for the domain administrator account.
 
 Type: `string`
 
-### <a name="input_domainAdminUser"></a> [domainAdminUser](#input\_domainAdminUser)
+### <a name="input_domain_admin_user"></a> [domain\_admin\_user](#input\_domain\_admin\_user)
 
 Description: The username for the domain administrator account.
 
 Type: `string`
 
-### <a name="input_domainFqdn"></a> [domainFqdn](#input\_domainFqdn)
+### <a name="input_domain_fqdn"></a> [domain\_fqdn](#input\_domain\_fqdn)
 
 Description: The domain FQDN.
 
 Type: `string`
 
-### <a name="input_domainServerIP"></a> [domainServerIP](#input\_domainServerIP)
+### <a name="input_domain_server_ip"></a> [domain\_server\_ip](#input\_domain\_server\_ip)
 
 Description: The ip of the domain server.
 
@@ -127,13 +127,13 @@ Description: The starting IP address of the IP address range of the logical netw
 
 Type: `string`
 
-### <a name="input_localAdminPassword"></a> [localAdminPassword](#input\_localAdminPassword)
+### <a name="input_local_admin_password"></a> [local\_admin\_password](#input\_local\_admin\_password)
 
 Description: The password for the local administrator account.
 
 Type: `string`
 
-### <a name="input_localAdminUser"></a> [localAdminUser](#input\_localAdminUser)
+### <a name="input_local_admin_user"></a> [local\_admin\_user](#input\_local\_admin\_user)
 
 Description: The username for the local administrator account.
 
@@ -151,7 +151,7 @@ Description: The name of the this resource.
 
 Type: `string`
 
-### <a name="input_resourceGroup"></a> [resourceGroup](#input\_resourceGroup)
+### <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group)
 
 Description: The resource group where the resources will be deployed.
 
@@ -176,13 +176,13 @@ list(object({
   }))
 ```
 
-### <a name="input_servicePrincipalId"></a> [servicePrincipalId](#input\_servicePrincipalId)
+### <a name="input_service_principal_id"></a> [service\_principal\_id](#input\_service\_principal\_id)
 
 Description: The service principal ID for the Azure account.
 
 Type: `string`
 
-### <a name="input_servicePrincipalSecret"></a> [servicePrincipalSecret](#input\_servicePrincipalSecret)
+### <a name="input_service_principal_secret"></a> [service\_principal\_secret](#input\_service\_principal\_secret)
 
 Description: The service principal secret for the Azure account.
 
@@ -200,7 +200,7 @@ Description: The starting IP address of the IP address range.
 
 Type: `string`
 
-### <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId)
+### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
 
 Description: The subscription ID for the Azure account.
 
@@ -210,7 +210,7 @@ Type: `string`
 
 The following input variables are optional (have default values):
 
-### <a name="input_authenticationMethod"></a> [authenticationMethod](#input\_authenticationMethod)
+### <a name="input_authentication_method"></a> [authentication\_method](#input\_authentication\_method)
 
 Description: The authentication method for Enter-PSSession.
 
@@ -242,7 +242,7 @@ object({
 
 Default: `null`
 
-### <a name="input_dcPort"></a> [dcPort](#input\_dcPort)
+### <a name="input_dc_port"></a> [dc\_port](#input\_dc\_port)
 
 Description: Domain controller winrm port in virtual host
 
@@ -320,70 +320,6 @@ object({
 
 Default: `null`
 
-### <a name="input_private_endpoints"></a> [private\_endpoints](#input\_private\_endpoints)
-
-Description: A map of private endpoints to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-
-- `name` - (Optional) The name of the private endpoint. One will be generated if not set.
-- `role_assignments` - (Optional) A map of role assignments to create on the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time. See `var.role_assignments` for more information.
-- `lock` - (Optional) The lock level to apply to the private endpoint. Default is `None`. Possible values are `None`, `CanNotDelete`, and `ReadOnly`.
-- `tags` - (Optional) A mapping of tags to assign to the private endpoint.
-- `subnet_resource_id` - The resource ID of the subnet to deploy the private endpoint in.
-- `private_dns_zone_group_name` - (Optional) The name of the private DNS zone group. One will be generated if not set.
-- `private_dns_zone_resource_ids` - (Optional) A set of resource IDs of private DNS zones to associate with the private endpoint. If not set, no zone groups will be created and the private endpoint will not be associated with any private DNS zones. DNS records must be managed external to this module.
-- `application_security_group_resource_ids` - (Optional) A map of resource IDs of application security groups to associate with the private endpoint. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-- `private_service_connection_name` - (Optional) The name of the private service connection. One will be generated if not set.
-- `network_interface_name` - (Optional) The name of the network interface. One will be generated if not set.
-- `location` - (Optional) The Azure location where the resources will be deployed. Defaults to the location of the resource group.
-- `resource_group_name` - (Optional) The resource group where the resources will be deployed. Defaults to the resource group of this resource.
-- `ip_configurations` - (Optional) A map of IP configurations to create on the private endpoint. If not specified the platform will create one. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
-  - `name` - The name of the IP configuration.
-  - `private_ip_address` - The private IP address of the IP configuration.
-
-Type:
-
-```hcl
-map(object({
-    name = optional(string, null)
-    role_assignments = optional(map(object({
-      role_definition_id_or_name             = string
-      principal_id                           = string
-      description                            = optional(string, null)
-      skip_service_principal_aad_check       = optional(bool, false)
-      condition                              = optional(string, null)
-      condition_version                      = optional(string, null)
-      delegated_managed_identity_resource_id = optional(string, null)
-    })), {})
-    lock = optional(object({
-      kind = string
-      name = optional(string, null)
-    }), null)
-    tags                                    = optional(map(string), null)
-    subnet_resource_id                      = string
-    private_dns_zone_group_name             = optional(string, "default")
-    private_dns_zone_resource_ids           = optional(set(string), [])
-    application_security_group_associations = optional(map(string), {})
-    private_service_connection_name         = optional(string, null)
-    network_interface_name                  = optional(string, null)
-    location                                = optional(string, null)
-    resource_group_name                     = optional(string, null)
-    ip_configurations = optional(map(object({
-      name               = string
-      private_ip_address = string
-    })), {})
-  }))
-```
-
-Default: `{}`
-
-### <a name="input_private_endpoints_manage_dns_zone_group"></a> [private\_endpoints\_manage\_dns\_zone\_group](#input\_private\_endpoints\_manage\_dns\_zone\_group)
-
-Description: Whether to manage private DNS zone groups with this module. If set to false, you must manage private DNS zone groups externally, e.g. using Azure Policy.
-
-Type: `bool`
-
-Default: `true`
-
 ### <a name="input_role_assignments"></a> [role\_assignments](#input\_role\_assignments)
 
 Description: A map of role assignments to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
@@ -429,7 +365,7 @@ Type: `map(string)`
 
 Default: `null`
 
-### <a name="input_virtualHostIp"></a> [virtualHostIp](#input\_virtualHostIp)
+### <a name="input_virtual_host_ip"></a> [virtual\_host\_ip](#input\_virtual\_host\_ip)
 
 Description: The virtual host IP address.
 

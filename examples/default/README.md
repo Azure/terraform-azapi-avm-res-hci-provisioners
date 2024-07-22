@@ -54,25 +54,25 @@ module "test" {
 
   enable_telemetry = var.enable_telemetry # see variables.tf
   // Beginning of specific varible for virtual environment
-  dcPort = 6985
+  dc_port = 6985
   serverPorts = {
     "AzSHOST1" = 15985,
     "AzSHOST2" = 25985
   }
-  virtualHostIp = var.private_ip
+  virtual_host_ip = var.private_ip
 
 
   adou_suffix              = "DC=jumpstart,DC=local"
-  subscriptionId           = var.subscriptionId
-  authenticationMethod     = "Credssp"
-  domainFqdn               = "jumpstart.local"
+  subscription_id          = var.subscription_id
+  authentication_method    = "Credssp"
+  domain_fqdn              = "jumpstart.local"
   deployment_user_password = var.deployment_user_password
-  domainAdminUser          = var.domainAdminUser
-  domainAdminPassword      = var.domainAdminPassword
-  localAdminUser           = var.localAdminUser
-  localAdminPassword       = var.localAdminPassword
-  servicePrincipalId       = var.servicePrincipalId
-  servicePrincipalSecret   = var.servicePrincipalSecret
+  domain_admin_user        = var.domain_admin_user
+  domain_admin_password    = var.domain_admin_password
+  local_admin_user         = var.local_admin_user
+  local_admin_password     = var.local_admin_password
+  service_principal_id     = var.service_principal_id
+  service_principal_secret = var.service_principal_secret
   cluster_name             = local.cluster_name
   starting_address         = "192.168.1.55"
   ending_address           = "192.168.1.65"
@@ -86,9 +86,9 @@ module "test" {
       ipv4Address = "192.168.1.13"
     }
   ]
-  resourceGroup         = azurerm_resource_group.rg
+  resource_group        = azurerm_resource_group.rg
   deployment_user       = local.deployment_user_name
-  domainServerIP        = "192.168.1.254"
+  domain_server_ip      = "192.168.1.254"
   adou_path             = local.adou_path
   lnet_starting_address = "192.168.1.171"
   lnet_ending_address   = "192.168.1.190"
@@ -129,25 +129,25 @@ Description: The password for deployment user.
 
 Type: `string`
 
-### <a name="input_domainAdminPassword"></a> [domainAdminPassword](#input\_domainAdminPassword)
+### <a name="input_domain_admin_password"></a> [domain\_admin\_password](#input\_domain\_admin\_password)
 
 Description: The password of the domain account.
 
 Type: `string`
 
-### <a name="input_domainAdminUser"></a> [domainAdminUser](#input\_domainAdminUser)
+### <a name="input_domain_admin_user"></a> [domain\_admin\_user](#input\_domain\_admin\_user)
 
 Description: The username of the domain account.
 
 Type: `string`
 
-### <a name="input_localAdminPassword"></a> [localAdminPassword](#input\_localAdminPassword)
+### <a name="input_local_admin_password"></a> [local\_admin\_password](#input\_local\_admin\_password)
 
 Description: The password of the local administrator account.
 
 Type: `string`
 
-### <a name="input_localAdminUser"></a> [localAdminUser](#input\_localAdminUser)
+### <a name="input_local_admin_user"></a> [local\_admin\_user](#input\_local\_admin\_user)
 
 Description: The username of the local administrator account.
 
@@ -165,19 +165,19 @@ Description: The run number
 
 Type: `string`
 
-### <a name="input_servicePrincipalId"></a> [servicePrincipalId](#input\_servicePrincipalId)
+### <a name="input_service_principal_id"></a> [service\_principal\_id](#input\_service\_principal\_id)
 
 Description: The id of service principal to create hci cluster.
 
 Type: `string`
 
-### <a name="input_servicePrincipalSecret"></a> [servicePrincipalSecret](#input\_servicePrincipalSecret)
+### <a name="input_service_principal_secret"></a> [service\_principal\_secret](#input\_service\_principal\_secret)
 
 Description: The secret of service principal to create hci cluster.
 
 Type: `string`
 
-### <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId)
+### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
 
 Description: The subscription id to register this environment.
 
@@ -213,7 +213,7 @@ Type: `bool`
 
 Default: `true`
 
-### <a name="input_rpServicePrincipalObjectId"></a> [rpServicePrincipalObjectId](#input\_rpServicePrincipalObjectId)
+### <a name="input_rp_service_principal_object_id"></a> [rp\_service\_principal\_object\_id](#input\_rp\_service\_principal\_object\_id)
 
 Description: The object ID of the HCI resource provider service principal.
 
@@ -221,7 +221,7 @@ Type: `string`
 
 Default: `""`
 
-### <a name="input_vmAdminPassword"></a> [vmAdminPassword](#input\_vmAdminPassword)
+### <a name="input_vm_admin_password"></a> [vm\_admin\_password](#input\_vm\_admin\_password)
 
 Description: Admin password for the VM
 
