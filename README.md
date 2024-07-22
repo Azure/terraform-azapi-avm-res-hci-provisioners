@@ -47,7 +47,7 @@ The following resources are used by this module:
 - [terraform_data.replacement](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) (resource)
 - [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 - [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
-- [external_external.lnetIpCheck](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) (data source)
+- [external_external.lnet_ip_check](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) (data source)
 - [modtm_module_source.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->

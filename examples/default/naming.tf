@@ -1,5 +1,4 @@
 locals {
-  addressResourceName        = "${local.siteId}-address"
   adouPath                   = "OU=${local.siteId},${var.adouSuffix}"
   aksArcName                 = "${local.siteId}-aksArc"
   clusterName                = "${local.siteId}-cl"

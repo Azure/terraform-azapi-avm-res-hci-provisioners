@@ -1,4 +1,4 @@
-data "external" "lnetIpCheck" {
+data "external" "lnet_ip_check" {
   program = ["powershell.exe", "-File", "${abspath(path.module)}/scripts/ip-range-overlap.ps1", var.startingAddress, var.endingAddress, var.lnet-startingAddress, var.lnet-endingAddress]
 
   lifecycle {

@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "rg" {
   }
 
   depends_on = [
-    data.external.lnetIpCheck
+    data.external.lnet_ip_check
   ]
 
   lifecycle {
@@ -46,7 +46,7 @@ module "servers" {
     server.name => server.ipv4Address
   }
   depends_on             = [terraform_data.ad_creation_provisioner, azurerm_resource_group.rg]
-  source                 = "./hci-server"
+  source                 = "./modules/hci-server"
   resourceGroupName      = azurerm_resource_group.rg.name
   serverName             = each.key
   localAdminUser         = var.localAdminUser
