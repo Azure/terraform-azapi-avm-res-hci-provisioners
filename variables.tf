@@ -1,3 +1,59 @@
+variable "adouPath" {
+  type        = string
+  description = "The Active Directory OU path."
+}
+
+variable "clusterName" {
+  type        = string
+  description = "The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure."
+}
+
+variable "deploymentUser" {
+  type        = string
+  description = "The username for deployment user."
+
+  validation {
+    condition     = length(var.deploymentUser) < 21 && length(var.deploymentUser) > 0 && can(regex("^[a-zA-Z_][a-zA-Z0-9_-]*$", var.deploymentUser))
+    error_message = "Username must be between 1 to 20 characters and only contain letters, numbers, hyphens, and underscores and may not start with a hyphen or number."
+    //20 character limit for sAMAccountName in ad preparation New-ADUser.
+  }
+}
+
+variable "deploymentUserPassword" {
+  type        = string
+  description = "The password for deployment user."
+}
+
+variable "domainAdminPassword" {
+  type        = string
+  description = "The password for the domain administrator account."
+}
+
+variable "domainAdminUser" {
+  type        = string
+  description = "The username for the domain administrator account."
+}
+
+variable "domainFqdn" {
+  type        = string
+  description = "The domain FQDN."
+}
+
+variable "domainServerIP" {
+  type        = string
+  description = "The ip of the domain server."
+}
+
+variable "localAdminPassword" {
+  type        = string
+  description = "The password for the local administrator account."
+}
+
+variable "localAdminUser" {
+  type        = string
+  description = "The username for the local administrator account."
+}
+
 variable "location" {
   type        = string
   description = "Azure region where the resource should be deployed."
@@ -16,10 +72,58 @@ variable "name" {
   }
 }
 
+variable "resourceGroup" {
+  description = "The resource group where the resources will be deployed."
+}
+
 # This is required for most resource modules
 variable "resource_group_name" {
   type        = string
   description = "The resource group where the resources will be deployed."
+}
+
+variable "servers" {
+  type = list(object({
+    name        = string
+    ipv4Address = string
+  }))
+  description = "A list of servers with their names and IPv4 addresses."
+}
+
+variable "servicePrincipalId" {
+  type        = string
+  description = "The service principal ID for the Azure account."
+}
+
+variable "servicePrincipalSecret" {
+  type        = string
+  description = "The service principal secret for the Azure account."
+}
+
+variable "siteId" {
+  type        = string
+  description = "A unique identifier for the site."
+
+  validation {
+    condition     = length(var.siteId) < 9 && length(var.siteId) > 0
+    error_message = "value of siteId should be less than 9 characters and greater than 0 characters"
+  }
+}
+
+variable "subscriptionId" {
+  type        = string
+  description = "The subscription ID for the Azure account."
+}
+
+variable "authenticationMethod" {
+  type        = string
+  default     = "Default"
+  description = "The authentication method for Enter-PSSession."
+
+  validation {
+    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authenticationMethod))
+    error_message = "Value of authenticationMethod should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
+  }
 }
 
 # required AVM interfaces
@@ -43,6 +147,18 @@ A map describing customer-managed keys to associate with the resource. This incl
 - `user_assigned_identity` - (Optional) An object representing a user-assigned identity with the following properties:
   - `resource_id` - The resource ID of the user-assigned identity.
 DESCRIPTION  
+}
+
+variable "dcPort" {
+  type        = number
+  default     = 5985
+  description = "Domain controller winrm port in virtual host"
+}
+
+variable "destory_adou" {
+  type        = bool
+  default     = false
+  description = "whether destroy previous adou"
 }
 
 variable "diagnostic_settings" {
@@ -226,9 +342,22 @@ DESCRIPTION
   nullable    = false
 }
 
+variable "serverPorts" {
+  type        = map(number)
+  default     = {}
+  description = "Server winrm ports in virtual host"
+}
+
 # tflint-ignore: terraform_unused_declarations
 variable "tags" {
   type        = map(string)
   default     = null
   description = "(Optional) Tags of the resource."
+}
+
+# Virtual host related variables
+variable "virtualHostIp" {
+  type        = string
+  default     = ""
+  description = "The virtual host IP address."
 }

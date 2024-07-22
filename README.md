@@ -7,7 +7,10 @@ Things to do:
 
 1. Set up a GitHub repo environment called `test`.
 1. Configure environment protection rule to ensure that approval is required before deploying to this environment.
-1. Install Docker Desktop to run tests
+1. Create a user-assigned managed identity in your test subscription.
+1. Create a role assignment for the managed identity on your test subscription, use the minimum required role.
+1. Configure federated identity credentials on the user assigned managed identity. Use the GitHub environment.
+1. Search and update TODOs within the code and remove the TODO comments once complete.
 
 > [!IMPORTANT]
 > As the overall AVM framework is not GA (generally available) yet - the CI framework and test automation is not fully functional and implemented across all supported languages yet - breaking changes are expected, and additional customer feedback is yet to be gathered and incorporated. Hence, modules **MUST NOT** be published at version `1.0.0` or higher at this time.
@@ -23,41 +26,124 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.5)
 
+- <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 1.13)
+
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 3.71)
 
 - <a name="requirement_modtm"></a> [modtm](#requirement\_modtm) (~> 0.3)
 
 - <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
 
-## Providers
-
-The following providers are used by this module:
-
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 3.71)
-
-- <a name="provider_modtm"></a> [modtm](#provider\_modtm) (~> 0.3)
-
-- <a name="provider_random"></a> [random](#provider\_random) (~> 3.5)
-
 ## Resources
 
 The following resources are used by this module:
 
 - [azurerm_management_lock.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/management_lock) (resource)
-- [azurerm_private_endpoint.this_managed_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint.this_unmanaged_dns_zone_groups](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint) (resource)
-- [azurerm_private_endpoint_application_security_group_association.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/private_endpoint_application_security_group_association) (resource)
-- [azurerm_resource_group.TODO](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [azurerm_role_assignment.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) (resource)
 - [modtm_telemetry.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/resources/telemetry) (resource)
 - [random_uuid.telemetry](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid) (resource)
+- [terraform_data.ad_creation_provisioner](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) (resource)
+- [terraform_data.replacement](https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/resources/data) (resource)
+- [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
 - [azurerm_client_config.telemetry](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) (data source)
+- [external_external.lnetIpCheck](https://registry.terraform.io/providers/hashicorp/external/latest/docs/data-sources/external) (data source)
 - [modtm_module_source.telemetry](https://registry.terraform.io/providers/azure/modtm/latest/docs/data-sources/module_source) (data source)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
 
 The following input variables are required:
+
+### <a name="input_adouPath"></a> [adouPath](#input\_adouPath)
+
+Description: The Active Directory OU path.
+
+Type: `string`
+
+### <a name="input_adouSuffix"></a> [adouSuffix](#input\_adouSuffix)
+
+Description: The suffix of Active Directory OU path.
+
+Type: `string`
+
+### <a name="input_clusterName"></a> [clusterName](#input\_clusterName)
+
+Description: The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure.
+
+Type: `string`
+
+### <a name="input_deploymentUser"></a> [deploymentUser](#input\_deploymentUser)
+
+Description: The username for deployment user.
+
+Type: `string`
+
+### <a name="input_deploymentUserPassword"></a> [deploymentUserPassword](#input\_deploymentUserPassword)
+
+Description: The password for deployment user.
+
+Type: `string`
+
+### <a name="input_domainAdminPassword"></a> [domainAdminPassword](#input\_domainAdminPassword)
+
+Description: The password for the domain administrator account.
+
+Type: `string`
+
+### <a name="input_domainAdminUser"></a> [domainAdminUser](#input\_domainAdminUser)
+
+Description: The username for the domain administrator account.
+
+Type: `string`
+
+### <a name="input_domainFqdn"></a> [domainFqdn](#input\_domainFqdn)
+
+Description: The domain FQDN.
+
+Type: `string`
+
+### <a name="input_domainServerIP"></a> [domainServerIP](#input\_domainServerIP)
+
+Description: The ip of the domain server.
+
+Type: `string`
+
+### <a name="input_endingAddress"></a> [endingAddress](#input\_endingAddress)
+
+Description: The ending IP address of the IP address range.
+
+Type: `string`
+
+### <a name="input_lnet-addressPrefix"></a> [lnet-addressPrefix](#input\_lnet-addressPrefix)
+
+Description: The CIDR prefix of the subnet that start from startting address and end with ending address, this can be omit if using existing logical network
+
+Type: `string`
+
+### <a name="input_lnet-endingAddress"></a> [lnet-endingAddress](#input\_lnet-endingAddress)
+
+Description: The ending IP address of the IP address range of the logical network, this can be omit if using existing logical network
+
+Type: `string`
+
+### <a name="input_lnet-startingAddress"></a> [lnet-startingAddress](#input\_lnet-startingAddress)
+
+Description: The starting IP address of the IP address range of the logical network, this can be omit if using existing logical network
+
+Type: `string`
+
+### <a name="input_localAdminPassword"></a> [localAdminPassword](#input\_localAdminPassword)
+
+Description: The password for the local administrator account.
+
+Type: `string`
+
+### <a name="input_localAdminUser"></a> [localAdminUser](#input\_localAdminUser)
+
+Description: The username for the local administrator account.
+
+Type: `string`
 
 ### <a name="input_location"></a> [location](#input\_location)
 
@@ -71,15 +157,72 @@ Description: The name of the this resource.
 
 Type: `string`
 
+### <a name="input_resourceGroup"></a> [resourceGroup](#input\_resourceGroup)
+
+Description: The resource group where the resources will be deployed.
+
+Type: `any`
+
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: The resource group where the resources will be deployed.
 
 Type: `string`
 
+### <a name="input_servers"></a> [servers](#input\_servers)
+
+Description: A list of servers with their names and IPv4 addresses.
+
+Type:
+
+```hcl
+list(object({
+    name        = string
+    ipv4Address = string
+  }))
+```
+
+### <a name="input_servicePrincipalId"></a> [servicePrincipalId](#input\_servicePrincipalId)
+
+Description: The service principal ID for the Azure account.
+
+Type: `string`
+
+### <a name="input_servicePrincipalSecret"></a> [servicePrincipalSecret](#input\_servicePrincipalSecret)
+
+Description: The service principal secret for the Azure account.
+
+Type: `string`
+
+### <a name="input_siteId"></a> [siteId](#input\_siteId)
+
+Description: A unique identifier for the site.
+
+Type: `string`
+
+### <a name="input_startingAddress"></a> [startingAddress](#input\_startingAddress)
+
+Description: The starting IP address of the IP address range.
+
+Type: `string`
+
+### <a name="input_subscriptionId"></a> [subscriptionId](#input\_subscriptionId)
+
+Description: The subscription ID for the Azure account.
+
+Type: `string`
+
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_authenticationMethod"></a> [authenticationMethod](#input\_authenticationMethod)
+
+Description: The authentication method for Enter-PSSession.
+
+Type: `string`
+
+Default: `"Default"`
 
 ### <a name="input_customer_managed_key"></a> [customer\_managed\_key](#input\_customer\_managed\_key)
 
@@ -104,6 +247,22 @@ object({
 ```
 
 Default: `null`
+
+### <a name="input_dcPort"></a> [dcPort](#input\_dcPort)
+
+Description: Domain controller winrm port in virtual host
+
+Type: `number`
+
+Default: `5985`
+
+### <a name="input_destory_adou"></a> [destory\_adou](#input\_destory\_adou)
+
+Description: whether destroy previous adou
+
+Type: `bool`
+
+Default: `false`
 
 ### <a name="input_diagnostic_settings"></a> [diagnostic\_settings](#input\_diagnostic\_settings)
 
@@ -148,6 +307,14 @@ If it is set to false, then no telemetry will be collected.
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_lnet-vlanId"></a> [lnet-vlanId](#input\_lnet-vlanId)
+
+Description: The vlan id of the logical network, default is not set vlan id, this can be omit if using existing logical network
+
+Type: `number`
+
+Default: `null`
 
 ### <a name="input_lock"></a> [lock](#input\_lock)
 
@@ -278,6 +445,14 @@ map(object({
 
 Default: `{}`
 
+### <a name="input_serverPorts"></a> [serverPorts](#input\_serverPorts)
+
+Description: Server winrm ports in virtual host
+
+Type: `map(number)`
+
+Default: `{}`
+
 ### <a name="input_tags"></a> [tags](#input\_tags)
 
 Description: (Optional) Tags of the resource.
@@ -286,21 +461,35 @@ Type: `map(string)`
 
 Default: `null`
 
+### <a name="input_virtualHostIp"></a> [virtualHostIp](#input\_virtualHostIp)
+
+Description: The virtual host IP address.
+
+Type: `string`
+
+Default: `""`
+
 ## Outputs
 
 The following outputs are exported:
-
-### <a name="output_private_endpoints"></a> [private\_endpoints](#output\_private\_endpoints)
-
-Description:   A map of the private endpoints created.
 
 ### <a name="output_resource"></a> [resource](#output\_resource)
 
 Description: This is the full output for the resource.
 
+### <a name="output_servers"></a> [servers](#output\_servers)
+
+Description: n/a
+
 ## Modules
 
-No modules.
+The following Modules are called:
+
+### <a name="module_servers"></a> [servers](#module\_servers)
+
+Source: ./hci-server
+
+Version:
 
 <!-- markdownlint-disable-next-line MD041 -->
 ## Data Collection
