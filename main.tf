@@ -63,6 +63,6 @@ module "servers" {
 }
 
 resource "terraform_data" "replacement" {
-  input = var.resource_group.name
+  input = var.resource_group_name
 }
 

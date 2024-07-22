@@ -3,11 +3,6 @@ variable "adou_path" {
   description = "The Active Directory OU path."
 }
 
-variable "cluster_name" {
-  type        = string
-  description = "The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure."
-}
-
 variable "deployment_user" {
   type        = string
   description = "The username for deployment user."
@@ -70,10 +65,6 @@ variable "name" {
     #condition     = can(regex("^[a-z0-9]{5,50}$", var.name))
     #error_message = "The name must be between 5 and 50 characters long and can only contain lowercase letters and numbers."
   }
-}
-
-variable "resource_group" {
-  description = "The resource group where the resources will be deployed."
 }
 
 # This is required for most resource modules

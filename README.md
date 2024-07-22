@@ -26,8 +26,6 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.5)
 
-- <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 1.13)
-
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 3.71)
 
 - <a name="requirement_modtm"></a> [modtm](#requirement\_modtm) (~> 0.3)
@@ -64,12 +62,6 @@ Type: `string`
 ### <a name="input_adou_suffix"></a> [adou\_suffix](#input\_adou\_suffix)
 
 Description: The suffix of Active Directory OU path.
-
-Type: `string`
-
-### <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name)
-
-Description: The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure.
 
 Type: `string`
 
@@ -150,12 +142,6 @@ Type: `string`
 Description: The name of the this resource.
 
 Type: `string`
-
-### <a name="input_resource_group"></a> [resource\_group](#input\_resource\_group)
-
-Description: The resource group where the resources will be deployed.
-
-Type: `any`
 
 ### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 

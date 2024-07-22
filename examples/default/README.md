@@ -73,7 +73,6 @@ module "test" {
   local_admin_password     = var.local_admin_password
   service_principal_id     = var.service_principal_id
   service_principal_secret = var.service_principal_secret
-  cluster_name             = local.cluster_name
   starting_address         = "192.168.1.55"
   ending_address           = "192.168.1.65"
   servers = [
@@ -86,7 +85,6 @@ module "test" {
       ipv4Address = "192.168.1.13"
     }
   ]
-  resource_group        = azurerm_resource_group.rg
   deployment_user       = local.deployment_user
   domain_server_ip      = "192.168.1.254"
   adou_path             = local.adou_path
