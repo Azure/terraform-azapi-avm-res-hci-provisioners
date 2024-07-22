@@ -55,19 +55,19 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_adouPath"></a> [adou_path](#input\_adouPath)
-
-Description: The Active Directory OU path.
-
-Type: `string`
-
 ### <a name="input_adouSuffix"></a> [adouSuffix](#input\_adouSuffix)
 
 Description: The suffix of Active Directory OU path.
 
 Type: `string`
 
-### <a name="input_clusterName"></a> [cluster_name](#input\_clusterName)
+### <a name="input_adou_path"></a> [adou\_path](#input\_adou\_path)
+
+Description: The Active Directory OU path.
+
+Type: `string`
+
+### <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name)
 
 Description: The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure.
 
@@ -334,24 +334,6 @@ object({
 
 Default: `null`
 
-### <a name="input_managed_identities"></a> [managed\_identities](#input\_managed\_identities)
-
-Description: Controls the Managed Identity configuration on this resource. The following properties can be specified:
-
-- `system_assigned` - (Optional) Specifies if the System Assigned Managed Identity should be enabled.
-- `user_assigned_resource_ids` - (Optional) Specifies a list of User Assigned Managed Identity resource IDs to be assigned to this resource.
-
-Type:
-
-```hcl
-object({
-    system_assigned            = optional(bool, false)
-    user_assigned_resource_ids = optional(set(string), [])
-  })
-```
-
-Default: `{}`
-
 ### <a name="input_private_endpoints"></a> [private\_endpoints](#input\_private\_endpoints)
 
 Description: A map of private endpoints to create on this resource. The map key is deliberately arbitrary to avoid issues where map keys maybe unknown at plan time.
@@ -487,7 +469,7 @@ The following Modules are called:
 
 ### <a name="module_servers"></a> [servers](#module\_servers)
 
-Source: ./hci-server
+Source: ./modules/hci-server
 
 Version:
 

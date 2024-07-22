@@ -1,43 +1,11 @@
-variable "serverName" {
+variable "localAdminPassword" {
   type        = string
-  description = "The name of the server."
-}
-
-variable "resourceGroupName" {
-  type        = string
-  description = "The name of the resource group."
+  description = "The password for the local administrator account."
 }
 
 variable "localAdminUser" {
   type        = string
-  sensitive   = false
   description = "The username for the local administrator account."
-}
-
-variable "localAdminPassword" {
-  type        = string
-  sensitive   = false
-  description = "The password for the local administrator account."
-}
-
-variable "authenticationMethod" {
-  type        = string
-  description = "The authentication method for Enter-PSSession."
-  validation {
-    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authenticationMethod))
-    error_message = "Value of authenticationMethod should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
-  }
-  default = "Default"
-}
-
-variable "serverIP" {
-  type        = string
-  description = "The IP address of the server."
-}
-
-variable "subscriptionId" {
-  type        = string
-  description = "The subscription ID for the Azure account."
 }
 
 variable "location" {
@@ -45,9 +13,19 @@ variable "location" {
   description = "The Azure region where the resources will be deployed."
 }
 
-variable "tenant" {
+variable "resourceGroupName" {
   type        = string
-  description = "The tenant ID for the Azure account."
+  description = "The name of the resource group."
+}
+
+variable "serverIP" {
+  type        = string
+  description = "The IP address of the server."
+}
+
+variable "serverName" {
+  type        = string
+  description = "The name of the server."
 }
 
 variable "servicePrincipalId" {
@@ -57,17 +35,37 @@ variable "servicePrincipalId" {
 
 variable "servicePrincipalSecret" {
   type        = string
-  sensitive   = false
   description = "The service principal secret for the Azure account."
 }
 
-variable "winrmPort" {
-  type        = number
-  description = "WinRM port"
-  default     = 5985
+variable "subscriptionId" {
+  type        = string
+  description = "The subscription ID for the Azure account."
+}
+
+variable "tenant" {
+  type        = string
+  description = "The tenant ID for the Azure account."
+}
+
+variable "authenticationMethod" {
+  type        = string
+  default     = "Default"
+  description = "The authentication method for Enter-PSSession."
+
+  validation {
+    condition     = can(regex("^(Default|Basic|Negotiate|NegotiateWithImplicitCredential|Credssp|Digest|Kerberos)$", var.authenticationMethod))
+    error_message = "Value of authenticationMethod should be {Default | Basic | Negotiate | NegotiateWithImplicitCredential | Credssp | Digest | Kerberos}"
+  }
 }
 
 variable "expandC" {
   type    = bool
   default = false
+}
+
+variable "winrmPort" {
+  type        = number
+  default     = 5985
+  description = "WinRM port"
 }

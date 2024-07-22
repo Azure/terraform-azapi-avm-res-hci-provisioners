@@ -73,7 +73,7 @@ module "test" {
   localAdminPassword     = var.localAdminPassword
   servicePrincipalId     = var.servicePrincipalId
   servicePrincipalSecret = var.servicePrincipalSecret
-  cluster_name            = local.cluster_name
+  cluster_name           = local.cluster_name
   startingAddress        = "192.168.1.55"
   endingAddress          = "192.168.1.65"
   servers = [
@@ -89,7 +89,7 @@ module "test" {
   resourceGroup        = azurerm_resource_group.rg
   deploymentUser       = local.deploymentUserName
   domainServerIP       = "192.168.1.254"
-  adou_path             = local.adou_path
+  adou_path            = local.adou_path
   lnet-startingAddress = "192.168.1.171"
   lnet-endingAddress   = "192.168.1.190"
   lnet-addressPrefix   = "192.168.1.0/24"

@@ -1,6 +1,6 @@
 locals {
-  adou_path                   = "OU=${var.siteId},${var.adouSuffix}"
-  cluster_name                = "${var.siteId}-cl"
+  adou_path                  = "OU=${var.siteId},${var.adouSuffix}"
+  cluster_name               = "${var.siteId}-cl"
   customLocationName         = "${var.siteId}-customlocation"
   dataCollectionEndpointName = "${var.siteId}-dce"
   dataCollectionRuleName     = "AzureStackHCI-${var.siteId}-dcr"
