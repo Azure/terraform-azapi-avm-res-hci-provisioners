@@ -81,7 +81,7 @@ module "test" {
     }
   ]
   resource_group        = azurerm_resource_group.rg
-  deployment_user       = local.deployment_user_name
+  deployment_user       = local.deployment_user
   domain_server_ip      = "192.168.1.254"
   adou_path             = local.adou_path
   lnet_starting_address = "192.168.1.171"

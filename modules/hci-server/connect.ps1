@@ -87,7 +87,7 @@ for ($count = 0; $count -lt 3; $count++) {
             $id = (Get-AzContext).Tenant.Id
             $token = (Get-AzAccessToken).Token
             $accountid = (Get-AzContext).Account.Id
-            Invoke-AzStackHciArcInitialization -subscription_id $subscription_id -resource_group $resource_group_name -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
+            Invoke-AzStackHciArcInitialization -SubscriptionId $subscription_id -ResourceGroup $resource_group_name -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
             $exitCode = $LASTEXITCODE
             $script:ErrorActionPreference = 'Stop'
             if ($exitCode -eq 0) {
@@ -101,7 +101,7 @@ for ($count = 0; $count -lt 3; $count++) {
             $ready = $false
             while (!$ready) {
                 Connect-AzAccount -Subscription $subscription_id -Tenant $tenant -Credential $creds -ServicePrincipal
-                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -resource_group $resource_group_name -MachineName $env:COMPUTERNAME -subscription_id $subscription_id
+                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -ResourceGroup $resource_group_name -MachineName $env:COMPUTERNAME -SubscriptionId $subscription_id
                 if ($extension.ProvisioningState -eq "Succeeded") {
                     $ready = $true
                 }
