@@ -3,7 +3,7 @@ param(
     $password,
     $authType,
     $ip, $port,
-    $subscriptionId, $resourceGroupName, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret, $expandC
+    $subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret, $expandC
 )
 
 $script:ErrorActionPreference = 'Stop'
@@ -25,7 +25,7 @@ for ($count = 0; $count -lt 3; $count++) {
         $session = New-PSSession -ComputerName $ip -Port $port -Authentication $authType -Credential $cred
 
         Invoke-Command -Session $session -ScriptBlock {
-            Param ($subscriptionId, $resourceGroupName, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret)
+            Param ($subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret)
             $script:ErrorActionPreference = 'Stop'
 
             function Install-ModuleIfMissing {
@@ -87,7 +87,7 @@ for ($count = 0; $count -lt 3; $count++) {
             $id = (Get-AzContext).Tenant.Id
             $token = (Get-AzAccessToken).Token
             $accountid = (Get-AzContext).Account.Id
-            Invoke-AzStackHciArcInitialization -SubscriptionID $subscriptionId -ResourceGroup $resourceGroupName -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
+            Invoke-AzStackHciArcInitialization -SubscriptionID $subscriptionId -ResourceGroup $resource_group_name -TenantID $id -Region $region -Cloud "AzureCloud" -ArmAccessToken $token -AccountID  $accountid
             $exitCode = $LASTEXITCODE
             $script:ErrorActionPreference = 'Stop'
             if ($exitCode -eq 0) {
@@ -101,7 +101,7 @@ for ($count = 0; $count -lt 3; $count++) {
             $ready = $false
             while (!$ready) {
                 Connect-AzAccount -Subscription $subscriptionId -Tenant $tenant -Credential $creds -ServicePrincipal
-                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -ResourceGroup $resourceGroupName -MachineName $env:COMPUTERNAME -SubscriptionId $subscriptionId
+                $extension = Get-AzConnectedMachineExtension -Name "AzureEdgeLifecycleManager" -ResourceGroup $resource_group_name -MachineName $env:COMPUTERNAME -SubscriptionId $subscriptionId
                 if ($extension.ProvisioningState -eq "Succeeded") {
                     $ready = $true
                 }
@@ -111,7 +111,7 @@ for ($count = 0; $count -lt 3; $count++) {
                 }
             }
 
-        } -ArgumentList $subscriptionId, $resourceGroupName, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret
+        } -ArgumentList $subscriptionId, $resource_group_name, $region, $tenant, $servicePrincipalId, $servicePrincipalSecret
         break
     }
     catch {

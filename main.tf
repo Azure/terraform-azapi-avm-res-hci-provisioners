@@ -1,9 +1,9 @@
 # TODO: Replace this dummy resource azurerm_resource_group.TODO with your module resource
 resource "azurerm_resource_group" "rg" {
   location = var.location
-  name     = local.resourceGroupName
+  name     = local.resource_group_name
   tags = {
-    siteId = var.siteId
+    site_id = var.site_id
   }
 
   depends_on = [
@@ -47,7 +47,7 @@ module "servers" {
   }
   depends_on             = [terraform_data.ad_creation_provisioner, azurerm_resource_group.rg]
   source                 = "./modules/hci-server"
-  resourceGroupName      = azurerm_resource_group.rg.name
+  resource_group_name    = azurerm_resource_group.rg.name
   serverName             = each.key
   localAdminUser         = var.localAdminUser
   localAdminPassword     = var.localAdminPassword

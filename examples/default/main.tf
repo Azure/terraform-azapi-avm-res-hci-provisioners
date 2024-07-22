@@ -56,20 +56,20 @@ module "test" {
   virtualHostIp = var.private_ip
 
 
-  adouSuffix             = "DC=jumpstart,DC=local"
-  subscriptionId         = var.subscriptionId
-  authenticationMethod   = "Credssp"
-  domainFqdn             = "jumpstart.local"
-  deploymentUserPassword = var.deploymentUserPassword
-  domainAdminUser        = var.domainAdminUser
-  domainAdminPassword    = var.domainAdminPassword
-  localAdminUser         = var.localAdminUser
-  localAdminPassword     = var.localAdminPassword
-  servicePrincipalId     = var.servicePrincipalId
-  servicePrincipalSecret = var.servicePrincipalSecret
-  cluster_name           = local.cluster_name
-  startingAddress        = "192.168.1.55"
-  endingAddress          = "192.168.1.65"
+  adou_suffix              = "DC=jumpstart,DC=local"
+  subscriptionId           = var.subscriptionId
+  authenticationMethod     = "Credssp"
+  domainFqdn               = "jumpstart.local"
+  deployment_user_password = var.deployment_user_password
+  domainAdminUser          = var.domainAdminUser
+  domainAdminPassword      = var.domainAdminPassword
+  localAdminUser           = var.localAdminUser
+  localAdminPassword       = var.localAdminPassword
+  servicePrincipalId       = var.servicePrincipalId
+  servicePrincipalSecret   = var.servicePrincipalSecret
+  cluster_name             = local.cluster_name
+  starting_address         = "192.168.1.55"
+  ending_address           = "192.168.1.65"
   servers = [
     {
       name        = "AzSHOST1",
@@ -80,12 +80,11 @@ module "test" {
       ipv4Address = "192.168.1.13"
     }
   ]
-  resourceGroup        = azurerm_resource_group.rg
-  deploymentUser       = local.deploymentUserName
-  domainServerIP       = "192.168.1.254"
-  adou_path            = local.adou_path
-  lnet-startingAddress = "192.168.1.171"
-  lnet-endingAddress   = "192.168.1.190"
-  lnet-addressPrefix   = "192.168.1.0/24"
-  siteId               = local.siteId
+  resourceGroup         = azurerm_resource_group.rg
+  deployment_user       = local.deployment_user_name
+  domainServerIP        = "192.168.1.254"
+  adou_path             = local.adou_path
+  lnet_starting_address = "192.168.1.171"
+  lnet_ending_address   = "192.168.1.190"
+  site_id               = local.site_id
 }

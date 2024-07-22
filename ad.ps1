@@ -6,8 +6,8 @@ param(
     $ip, $port,
     $domainFqdn,
     $ifdeleteadou,
-    $deploymentUser,
-    $deploymentUserPassword
+    $deployment_user,
+    $deployment_user_password
 )
 
 $script:ErrorActionPreference = 'Stop'
@@ -50,8 +50,8 @@ for ($count = 0; $count -lt 3; $count++) {
             }
             
         }
-        $deploymentSecPasswd = ConvertTo-SecureString $deploymentUserPassword -AsPlainText -Force
-        $lcmCred = New-Object System.Management.Automation.PSCredential -ArgumentList $deploymentUser, $deploymentSecPasswd
+        $deploymentSecPasswd = ConvertTo-SecureString $deployment_user_password -AsPlainText -Force
+        $lcmCred = New-Object System.Management.Automation.PSCredential -ArgumentList $deployment_user, $deploymentSecPasswd
         Invoke-Command -Session $session -ScriptBlock {
             echo "Install Nuget Provider"
             Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false

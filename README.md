@@ -55,15 +55,15 @@ The following resources are used by this module:
 
 The following input variables are required:
 
-### <a name="input_adouSuffix"></a> [adouSuffix](#input\_adouSuffix)
-
-Description: The suffix of Active Directory OU path.
-
-Type: `string`
-
 ### <a name="input_adou_path"></a> [adou\_path](#input\_adou\_path)
 
 Description: The Active Directory OU path.
+
+Type: `string`
+
+### <a name="input_adou_suffix"></a> [adou\_suffix](#input\_adou\_suffix)
+
+Description: The suffix of Active Directory OU path.
 
 Type: `string`
 
@@ -73,13 +73,13 @@ Description: The name of the HCI cluster. Must be the same as the name when crea
 
 Type: `string`
 
-### <a name="input_deploymentUser"></a> [deploymentUser](#input\_deploymentUser)
+### <a name="input_deployment_user"></a> [deployment\_user](#input\_deployment\_user)
 
 Description: The username for deployment user.
 
 Type: `string`
 
-### <a name="input_deploymentUserPassword"></a> [deploymentUserPassword](#input\_deploymentUserPassword)
+### <a name="input_deployment_user_password"></a> [deployment\_user\_password](#input\_deployment\_user\_password)
 
 Description: The password for deployment user.
 
@@ -109,25 +109,19 @@ Description: The ip of the domain server.
 
 Type: `string`
 
-### <a name="input_endingAddress"></a> [endingAddress](#input\_endingAddress)
+### <a name="input_ending_address"></a> [ending\_address](#input\_ending\_address)
 
 Description: The ending IP address of the IP address range.
 
 Type: `string`
 
-### <a name="input_lnet-addressPrefix"></a> [lnet-addressPrefix](#input\_lnet-addressPrefix)
-
-Description: The CIDR prefix of the subnet that start from startting address and end with ending address, this can be omit if using existing logical network
-
-Type: `string`
-
-### <a name="input_lnet-endingAddress"></a> [lnet-endingAddress](#input\_lnet-endingAddress)
+### <a name="input_lnet_ending_address"></a> [lnet\_ending\_address](#input\_lnet\_ending\_address)
 
 Description: The ending IP address of the IP address range of the logical network, this can be omit if using existing logical network
 
 Type: `string`
 
-### <a name="input_lnet-startingAddress"></a> [lnet-startingAddress](#input\_lnet-startingAddress)
+### <a name="input_lnet_starting_address"></a> [lnet\_starting\_address](#input\_lnet\_starting\_address)
 
 Description: The starting IP address of the IP address range of the logical network, this can be omit if using existing logical network
 
@@ -194,13 +188,13 @@ Description: The service principal secret for the Azure account.
 
 Type: `string`
 
-### <a name="input_siteId"></a> [siteId](#input\_siteId)
+### <a name="input_site_id"></a> [site\_id](#input\_site\_id)
 
 Description: A unique identifier for the site.
 
 Type: `string`
 
-### <a name="input_startingAddress"></a> [startingAddress](#input\_startingAddress)
+### <a name="input_starting_address"></a> [starting\_address](#input\_starting\_address)
 
 Description: The starting IP address of the IP address range.
 
@@ -307,14 +301,6 @@ If it is set to false, then no telemetry will be collected.
 Type: `bool`
 
 Default: `true`
-
-### <a name="input_lnet-vlanId"></a> [lnet-vlanId](#input\_lnet-vlanId)
-
-Description: The vlan id of the logical network, default is not set vlan id, this can be omit if using existing logical network
-
-Type: `number`
-
-Default: `null`
 
 ### <a name="input_lock"></a> [lock](#input\_lock)
 
@@ -459,9 +445,13 @@ The following outputs are exported:
 
 Description: This is the full output for the resource.
 
+### <a name="output_resource_id"></a> [resource\_id](#output\_resource\_id)
+
+Description: This is the resource id for the resource.
+
 ### <a name="output_servers"></a> [servers](#output\_servers)
 
-Description: n/a
+Description: avm-ptn-hci-server-provisioner
 
 ## Modules
 

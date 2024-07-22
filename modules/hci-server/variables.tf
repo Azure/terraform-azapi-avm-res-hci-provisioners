@@ -13,7 +13,7 @@ variable "location" {
   description = "The Azure region where the resources will be deployed."
 }
 
-variable "resourceGroupName" {
+variable "resource_group_name" {
   type        = string
   description = "The name of the resource group."
 }

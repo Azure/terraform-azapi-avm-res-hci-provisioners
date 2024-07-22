@@ -1,4 +1,4 @@
-variable "deploymentUserPassword" {
+variable "deployment_user_password" {
   type        = string
   description = "The password for deployment user."
 }

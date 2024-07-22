@@ -8,18 +8,18 @@ variable "cluster_name" {
   description = "The name of the HCI cluster. Must be the same as the name when creating HCI cluster on Azure."
 }
 
-variable "deploymentUser" {
+variable "deployment_user" {
   type        = string
   description = "The username for deployment user."
 
   validation {
-    condition     = length(var.deploymentUser) < 21 && length(var.deploymentUser) > 0 && can(regex("^[a-zA-Z_][a-zA-Z0-9_-]*$", var.deploymentUser))
+    condition     = length(var.deployment_user) < 21 && length(var.deployment_user) > 0 && can(regex("^[a-zA-Z_][a-zA-Z0-9_-]*$", var.deployment_user))
     error_message = "Username must be between 1 to 20 characters and only contain letters, numbers, hyphens, and underscores and may not start with a hyphen or number."
-    //20 character limit for sAMAccountName in ad preparation New-ADUser.
+    # 20 character limit for sAMAccountName in ad preparation New-ADUser.
   }
 }
 
-variable "deploymentUserPassword" {
+variable "deployment_user_password" {
   type        = string
   description = "The password for deployment user."
 }
@@ -100,13 +100,13 @@ variable "servicePrincipalSecret" {
   description = "The service principal secret for the Azure account."
 }
 
-variable "siteId" {
+variable "site_id" {
   type        = string
   description = "A unique identifier for the site."
 
   validation {
-    condition     = length(var.siteId) < 9 && length(var.siteId) > 0
-    error_message = "value of siteId should be less than 9 characters and greater than 0 characters"
+    condition     = length(var.site_id) < 9 && length(var.site_id) > 0
+    error_message = "value of site_id should be less than 9 characters and greater than 0 characters"
   }
 }
 

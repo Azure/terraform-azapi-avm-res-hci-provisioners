@@ -5,6 +5,12 @@ output "resource" {
   value       = azurerm_resource_group.rg # TODO: Replace this dummy resource azurerm_resource_group.TODO with your module resource
 }
 
+output "resource_id" {
+  description = "This is the resource id for the resource."
+  value       = azurerm_resource_group.rg.id
+}
+
 output "servers" {
-  value = module.servers
+  description = "avm-ptn-hci-server-provisioner"
+  value       = module.servers
 }

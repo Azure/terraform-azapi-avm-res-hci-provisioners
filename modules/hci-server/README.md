@@ -44,7 +44,7 @@ Description: The Azure region where the resources will be deployed.
 
 Type: `string`
 
-### <a name="input_resourceGroupName"></a> [resourceGroupName](#input\_resourceGroupName)
+### <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name)
 
 Description: The name of the resource group.
 
