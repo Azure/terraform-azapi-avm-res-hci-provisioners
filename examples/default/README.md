@@ -4,29 +4,6 @@
 This deploys the module in its simplest form.
 
 ```hcl
-terraform {
-  required_version = "~> 1.5"
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.74"
-    }
-    modtm = {
-      source  = "azure/modtm"
-      version = "~> 0.3"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "~> 3.5"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {}
-}
-
-
 ## Section to provide a random Azure region for the resource group
 # This allows us to randomize the region for the resource group.
 module "regions" {
@@ -48,9 +25,19 @@ module "naming" {
 }
 
 # This is required for resource modules
-resource "azurerm_resource_group" "this" {
-  location = module.regions.regions[random_integer.region_index.result].name
+resource "azurerm_resource_group" "rg" {
+  location = "eastus"
   name     = module.naming.resource_group.name_unique
+}
+
+variable "runnumber" {
+  description = "The run number"
+  type        = string
+}
+
+variable "private_ip" {
+  description = "value of private ip"
+  type        = string
 }
 
 # This is the module call
@@ -61,11 +48,49 @@ module "test" {
   source = "../../"
   # source             = "Azure/avm-<res/ptn>-<name>/azurerm"
   # ...
-  location            = azurerm_resource_group.this.location
+  location            = azurerm_resource_group.rg.location
   name                = "TODO" # TODO update with module.naming.<RESOURCE_TYPE>.name_unique
-  resource_group_name = azurerm_resource_group.this.name
+  resource_group_name = azurerm_resource_group.rg.name
 
   enable_telemetry = var.enable_telemetry # see variables.tf
+  // Beginning of specific varible for virtual environment
+  dc_port = 6985
+  serverPorts = {
+    "AzSHOST1" = 15985,
+    "AzSHOST2" = 25985
+  }
+  virtual_host_ip = var.private_ip
+
+
+  adou_suffix              = "DC=jumpstart,DC=local"
+  subscription_id          = var.subscription_id
+  authentication_method    = "Credssp"
+  domain_fqdn              = "jumpstart.local"
+  deployment_user_password = var.deployment_user_password
+  domain_admin_user        = var.domain_admin_user
+  domain_admin_password    = var.domain_admin_password
+  local_admin_user         = var.local_admin_user
+  local_admin_password     = var.local_admin_password
+  service_principal_id     = var.service_principal_id
+  service_principal_secret = var.service_principal_secret
+  starting_address         = "192.168.1.55"
+  ending_address           = "192.168.1.65"
+  servers = [
+    {
+      name        = "AzSHOST1",
+      ipv4Address = "192.168.1.12"
+    },
+    {
+      name        = "AzSHOST2",
+      ipv4Address = "192.168.1.13"
+    }
+  ]
+  deployment_user       = local.deployment_user
+  domain_server_ip      = "192.168.1.254"
+  adou_path             = local.adou_path
+  lnet_starting_address = "192.168.1.171"
+  lnet_ending_address   = "192.168.1.190"
+  site_id               = local.site_id
 }
 ```
 
@@ -76,35 +101,105 @@ The following requirements are needed by this module:
 
 - <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) (~> 1.5)
 
+- <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) (~> 1.13)
+
 - <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) (~> 3.74)
 
 - <a name="requirement_modtm"></a> [modtm](#requirement\_modtm) (~> 0.3)
 
 - <a name="requirement_random"></a> [random](#requirement\_random) (~> 3.5)
 
-## Providers
-
-The following providers are used by this module:
-
-- <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) (~> 3.74)
-
-- <a name="provider_random"></a> [random](#provider\_random) (~> 3.5)
-
 ## Resources
 
 The following resources are used by this module:
 
-- [azurerm_resource_group.this](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
+- [azurerm_resource_group.rg](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group) (resource)
 - [random_integer.region_index](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/integer) (resource)
 
 <!-- markdownlint-disable MD013 -->
 ## Required Inputs
 
-No required inputs.
+The following input variables are required:
+
+### <a name="input_deployment_user_password"></a> [deployment\_user\_password](#input\_deployment\_user\_password)
+
+Description: The password for deployment user.
+
+Type: `string`
+
+### <a name="input_domain_admin_password"></a> [domain\_admin\_password](#input\_domain\_admin\_password)
+
+Description: The password of the domain account.
+
+Type: `string`
+
+### <a name="input_domain_admin_user"></a> [domain\_admin\_user](#input\_domain\_admin\_user)
+
+Description: The username of the domain account.
+
+Type: `string`
+
+### <a name="input_local_admin_password"></a> [local\_admin\_password](#input\_local\_admin\_password)
+
+Description: The password of the local administrator account.
+
+Type: `string`
+
+### <a name="input_local_admin_user"></a> [local\_admin\_user](#input\_local\_admin\_user)
+
+Description: The username of the local administrator account.
+
+Type: `string`
+
+### <a name="input_private_ip"></a> [private\_ip](#input\_private\_ip)
+
+Description: value of private ip
+
+Type: `string`
+
+### <a name="input_runnumber"></a> [runnumber](#input\_runnumber)
+
+Description: The run number
+
+Type: `string`
+
+### <a name="input_service_principal_id"></a> [service\_principal\_id](#input\_service\_principal\_id)
+
+Description: The id of service principal to create hci cluster.
+
+Type: `string`
+
+### <a name="input_service_principal_secret"></a> [service\_principal\_secret](#input\_service\_principal\_secret)
+
+Description: The secret of service principal to create hci cluster.
+
+Type: `string`
+
+### <a name="input_subscription_id"></a> [subscription\_id](#input\_subscription\_id)
+
+Description: The subscription id to register this environment.
+
+Type: `string`
 
 ## Optional Inputs
 
 The following input variables are optional (have default values):
+
+### <a name="input_adou_suffix"></a> [adou\_suffix](#input\_adou\_suffix)
+
+Description: The suffix of Active Directory OU path.
+
+Type: `string`
+
+Default: `"DC=jumpstart,DC=local"`
+
+### <a name="input_domainJoinPassword"></a> [domainJoinPassword](#input\_domainJoinPassword)
+
+Description: Password of User with permissions to join the domain.
+
+Type: `string`
+
+Default: `"!!123abc!!123abc"`
 
 ### <a name="input_enable_telemetry"></a> [enable\_telemetry](#input\_enable\_telemetry)
 
@@ -115,6 +210,22 @@ If it is set to false, then no telemetry will be collected.
 Type: `bool`
 
 Default: `true`
+
+### <a name="input_rp_service_principal_object_id"></a> [rp\_service\_principal\_object\_id](#input\_rp\_service\_principal\_object\_id)
+
+Description: The object ID of the HCI resource provider service principal.
+
+Type: `string`
+
+Default: `""`
+
+### <a name="input_vm_admin_password"></a> [vm\_admin\_password](#input\_vm\_admin\_password)
+
+Description: Admin password for the VM
+
+Type: `string`
+
+Default: `"!!123abc!!123abc"`
 
 ## Outputs
 
